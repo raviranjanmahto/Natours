@@ -1,0 +1,23 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Natours application in node express mongodb",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raviranjanmahto/Natours.git"
+  },
+  "author": "Raviranjan Mahto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raviranjanmahto/Natours/issues"
+  },
+  "homepage": "https://github.com/raviranjanmahto/Natours#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  }
+}
