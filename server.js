@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config();
 const express = require("express");
+const dns = require("dns");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const tourRouter = require("./routes/tourRoutes");
@@ -15,6 +16,18 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
+
+app.use((req, res, next) => {
+  dns.lookup("google.com", err => {
+    if (err && err.code == "ENOTFOUND") {
+      res
+        .status(503)
+        .json({ status: "fail", message: "No internet connection" });
+    } else {
+      next();
+    }
+  });
+});
 
 app.use((req, res, next) => {
   console.log("Hello from the middleware🥰");
