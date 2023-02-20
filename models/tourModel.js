@@ -24,6 +24,7 @@ const tourSchema = new mongoose.Schema(
     },
     maxGroupSize: {
       type: Number,
+      min: [1, "GroupSize must be above 1.0"],
       required: [true, "A tour must have a group size"],
     },
     difficulty: {
@@ -46,6 +47,7 @@ const tourSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
+      min: [1, "Price must be above 1.0"],
       required: [true, "A tour must hae a price!"],
     },
     priceDiscount: {
