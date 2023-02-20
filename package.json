@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "development": "nodemon server.js",
-    "production": "set NODE_ENV=production && nodemon server.js",
+    "production": "set NODE_ENV=production&&nodemon server.js",
+    "debug": "ndb server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
