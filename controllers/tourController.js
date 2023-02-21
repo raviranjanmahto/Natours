@@ -27,7 +27,9 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 
   const newTours = await Tour.countDocuments();
   if (skip >= newTours)
-    throw new Error("The page you are looking for does not exist!");
+    return next(
+      new AppError(`The page you are looking for does not exist.`, 404)
+    );
   // const features = new APIFeatures(Tour.find(), req.query)
   //   .filter()
   //   .sort()
