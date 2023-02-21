@@ -1,5 +1,14 @@
 const dotenv = require("dotenv");
 dotenv.config();
+const fs = require("fs");
+process.on("uncaughtException", err => {
+  const error = Object.create(err);
+  console.log("UNCAUGHT EXCEPTION!💥💥💥🙄💥💥💥 Shutting down... ");
+  console.log(error.name, error.message);
+  const now = new Date(Date.now());
+  fs.appendFileSync("./log.txt", `${now.toUTCString()} - ${err}\n`, "utf-8");
+  process.exit(1);
+});
 const express = require("express");
 const dns = require("dns");
 const morgan = require("morgan");
@@ -55,6 +64,18 @@ mongoose
 
 // 4) START SERVER
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}...`);
 });
+
+process.on("unhandledRejection", err => {
+  console.log("UNHANDLER REJECTION!💥💥💥🙄💥💥💥 Shutting down... ");
+  console.log(err.name, err.message);
+  const now = new Date(Date.now());
+  fs.appendFileSync("./log.txt", `${now.toUTCString()} - ${err}\n`, "utf-8");
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// console.log(x);
