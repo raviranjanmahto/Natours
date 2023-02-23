@@ -1,6 +1,7 @@
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
+// This whole implementation is for ADMIN only.
 exports.deleteOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -12,6 +13,7 @@ exports.deleteOne = Model =>
     return res.status(204).json({ status: "success", data: null });
   });
 
+// This whole implementation is for ADMIN only.
 exports.updateOne = Model =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
@@ -24,4 +26,11 @@ exports.updateOne = Model =>
       );
     }
     return res.status(200).json({ status: "success", data: { data: doc } });
+  });
+
+// This whole implementation is for ADMIN only.
+exports.createOne = Model =>
+  catchAsync(async (req, res, next) => {
+    const doc = await Model.create(req.body);
+    res.status(201).json({ status: "success", data: { data: doc } });
   });
