@@ -42,15 +42,16 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
     .json({ status: "success", results: tours.length, data: { tours } });
 });
 
-exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate("reviews");
-  // Tour.findOne({_id: req.params.id})
-  if (!tour) {
-    return next(new AppError(`No tour found with id: ${req.params.id}`, 404));
-  }
-  res.status(200).json({ status: "success", data: { tour } });
-});
+// exports.getTour = catchAsync(async (req, res, next) => {
+//   const tour = await Tour.findById(req.params.id).populate("reviews");
+//   // Tour.findOne({_id: req.params.id})
+//   if (!tour) {
+//     return next(new AppError(`No tour found with id: ${req.params.id}`, 404));
+//   }
+//   res.status(200).json({ status: "success", data: { tour } });
+// });
 
+exports.getTour = factory.getOne(Tour, { path: "reviews" });
 exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour); //Only for Admin
 exports.deleteTour = factory.deleteOne(Tour); //Only for Admin

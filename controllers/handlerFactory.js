@@ -34,3 +34,17 @@ exports.createOne = Model =>
     const doc = await Model.create(req.body);
     res.status(201).json({ status: "success", data: { data: doc } });
   });
+
+// This whole implementation is for ADMIN only.
+exports.getOne = (Model, populateOption) =>
+  catchAsync(async (req, res, next) => {
+    let query = Model.findById(req.params.id);
+    if (populateOption) query = query.populate(populateOption);
+    const doc = await query;
+    if (!doc) {
+      return next(
+        new AppError(`No document found with id: ${req.params.id}`, 404)
+      );
+    }
+    res.status(200).json({ status: "success", data: { data: doc } });
+  });
