@@ -1,7 +1,5 @@
-const fs = require("fs");
 const Tour = require("../models/tourModel");
-const APIFeatures = require("../utils/apiFeatures");
-const AppError = require("../utils/appError");
+// const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 
@@ -12,35 +10,29 @@ exports.aliasTopTours = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = catchAsync(async (req, res, next) => {
-  const { sort, fields, page, limit } = req.query;
-  const sortBy = sort?.split(",").join(" ");
-  const fieldBy = fields?.split(",").join(" ");
-  const pageBy = page * 1 || 1;
-  const limitBy = limit * 1 || 10;
-  const skip = (pageBy - 1) * limitBy;
+// exports.getAllTours = catchAsync(async (req, res, next) => {
+//   const { sort, fields, page, limit } = req.query;
+//   const sortBy = sort?.split(",").join(" ");
+//   const fieldBy = fields?.split(",").join(" ");
+//   const pageBy = page * 1 || 1;
+//   const limitBy = limit * 1 || 10;
+//   const skip = (pageBy - 1) * limitBy;
 
-  const tours = await Tour.find(req.query)
-    .sort(sortBy ? sortBy : "-_id")
-    .select(fieldBy ? fieldBy : "-__v")
-    .skip(skip)
-    .limit(limitBy);
+//   const tours = await Tour.find(req.query)
+//     .sort(sortBy ? sortBy : "-_id")
+//     .select(fieldBy ? fieldBy : "-__v")
+//     .skip(skip)
+//     .limit(limitBy);
 
-  const newTours = await Tour.countDocuments();
-  if (skip >= newTours)
-    return next(
-      new AppError(`The page you are looking for does not exist.`, 404)
-    );
-  // const features = new APIFeatures(Tour.find(), req.query)
-  //   .filter()
-  //   .sort()
-  //   .limitFields()
-  //   .paginate();
-  // const tours = await features.query;
-  res
-    .status(200)
-    .json({ status: "success", results: tours.length, data: { tours } });
-});
+//   const newTours = await Tour.countDocuments();
+//   if (skip >= newTours)
+//     return next(
+//       new AppError(`The page you are looking for does not exist.`, 404)
+//     );
+//   res
+//     .status(200)
+//     .json({ status: "success", results: tours.length, data: { tours } });
+// });
 
 // exports.getTour = catchAsync(async (req, res, next) => {
 //   const tour = await Tour.findById(req.params.id).populate("reviews");
@@ -51,18 +43,11 @@ exports.getAllTours = catchAsync(async (req, res, next) => {
 //   res.status(200).json({ status: "success", data: { tour } });
 // });
 
+exports.getAllTours = factory.getAll(Tour);
 exports.getTour = factory.getOne(Tour, { path: "reviews" });
 exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour); //Only for Admin
 exports.deleteTour = factory.deleteOne(Tour); //Only for Admin
-
-// exports.deleteTour = catchAsync(async (req, res, next) => {
-//   const tour = await Tour.findByIdAndDelete(req.params.id);
-//   if (!tour) {
-//     return next(new AppError(`No tour found with id: ${req.params.id}`, 404));
-//   }
-//   return res.status(204).json({ status: "success", data: null });
-// });
 
 exports.getTourStats = catchAsync(async (req, res, next) => {
   const stats = await Tour.aggregate([
