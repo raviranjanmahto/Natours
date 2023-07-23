@@ -118,6 +118,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   try {
     await sendEmail({
+      from: '"Natours"<EMAIL>',
       email: user.email,
       name: user.name,
       subject: "Your password reset token (valid for 5 mins).",

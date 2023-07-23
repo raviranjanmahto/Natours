@@ -10,6 +10,7 @@ process.on("uncaughtException", err => {
   process.exit(1);
 });
 const express = require("express");
+const path = require("path");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
@@ -23,10 +24,18 @@ const mongoose = require("mongoose");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
+const viewRouter = require("./routes/viewRoutes");
 
 const app = express();
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 
 // 1) GLOBAL MIDDLEWARES
+
+// Serving static file
+// app.use(express.static(`${__dirname}/public`));
+app.use(express.static(path.join(__dirname, "public")));
+
 // Set security HTTP headers
 app.use(helmet());
 
@@ -70,9 +79,6 @@ app.use(
   })
 );
 
-// Serving static file
-app.use(express.static(`${__dirname}/public`));
-
 // Checking internet connection
 app.use((req, res, next) => {
   dns.lookup("google.com", err => {
@@ -92,6 +98,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
