@@ -7,7 +7,9 @@
     "development": "nodemon server.js",
     "production": "set NODE_ENV=production&&nodemon server.js",
     "debug": "ndb server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:js": "parcel watch --no-hmr ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "repository": {
     "type": "git",
@@ -20,8 +22,10 @@
   },
   "homepage": "https://github.com/raviranjanmahto/Natours#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
-    "dns": "^0.2.2",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-mongo-sanitize": "^2.2.0",
@@ -30,6 +34,7 @@
     "helmet": "^6.0.1",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.0",
+    "leaflet": "^1.9.4",
     "mongoose": "^6.9.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.1",
@@ -37,5 +42,8 @@
     "slugify": "^1.6.5",
     "validator": "^13.9.0",
     "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
   }
 }
