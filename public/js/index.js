@@ -1,13 +1,14 @@
 import "@babel/polyfill";
 import { login, logout } from "./login";
 import { displayMap } from "./mapBox";
-import { updateData } from "./updateSettings";
+import { updateSettings } from "./updateSettings";
 
 // Dom Elements
 const mapBox = document.getElementById("map");
-const loginForm = document.querySelector(".form");
+const loginForm = document.querySelector(".form--login");
 const logOutBtn = document.querySelector(".nav__el--logout");
 const userDataForm = document.querySelector(".form-user-data");
+const userPasswordForm = document.querySelector(".form-user-password");
 
 // Delegation
 if (mapBox) {
@@ -30,5 +31,14 @@ if (userDataForm)
     e.preventDefault();
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
-    updateData(name, email);
+    updateSettings({ name, email }, "Data");
+  });
+
+if (userPasswordForm)
+  userPasswordForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const passwordCurrent = document.getElementById("password-current").value;
+    const password = document.getElementById("password").value;
+    const passwordConfirm = document.getElementById("password-confirm").value;
+    updateSettings({ passwordCurrent, password, passwordConfirm }, "Password");
   });
