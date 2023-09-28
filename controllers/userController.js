@@ -18,7 +18,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   // name and email field is required so checking by IF
   if (name) user.name = name;
   if (email) user.email = email;
-  user.photo = photo;
+  if (photo) user.photo = photo;
   await user.save({ validateModifiedOnly: true });
 
   res.status(200).json({ status: "success", data: { user } });
