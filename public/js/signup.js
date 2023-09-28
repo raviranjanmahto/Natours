@@ -10,9 +10,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
     });
     if (res.data.status === "success") {
       showAlert("success", "Account created successfully!");
-      window.setTimeout(() => {
-        location.assign("/");
-      }, 1000);
+      location.assign("/");
     }
   } catch (error) {
     showAlert("error", error.response.data.message);

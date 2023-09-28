@@ -10,9 +10,7 @@ export const login = async (email, password) => {
     });
     if (res.data.status === "success") {
       showAlert("success", "Logged in successfully!");
-      window.setTimeout(() => {
-        location.assign("/");
-      }, 1000);
+      location.assign("/");
     }
   } catch (error) {
     showAlert("error", error.response.data.message);
@@ -25,7 +23,10 @@ export const logout = async () => {
       method: "GET",
       url: "/api/v1/users/logout",
     });
-    if (res.data.status === "success") location.assign("/");
+    if (res.data.status === "success") {
+      showAlert("success", "Logged out successfully!");
+      location.assign("/");
+    }
   } catch (error) {
     showAlert("error", "Error logging out! Try again.");
   }
