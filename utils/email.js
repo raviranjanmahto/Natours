@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 const pug = require("pug");
-const { htmlToText } = require("html-to-text");
+const { convert } = require("html-to-text");
 
 module.exports = class Email {
   constructor(user, url) {
@@ -48,7 +48,8 @@ module.exports = class Email {
       from: this.from,
       to: this.to,
       subject,
-      // html: htmlToText(),
+      html,
+      text: convert(html),
     };
     // 3) CREATE A TRANSPORT AND SEND EMAIL
     await this.newTransport().sendMail(mailOptions);
@@ -56,5 +57,12 @@ module.exports = class Email {
 
   async sendWelcome() {
     await this.send("Welcome", "Welcome to the Natours Family!");
+  }
+
+  async sendPasswordReset() {
+    await this.send(
+      "passwordReset",
+      "Your password reset token (valid only for 5 minutes)"
+    );
   }
 };
