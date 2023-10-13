@@ -26,6 +26,7 @@ const mongoose = require("mongoose");
 const tourRouter = require("./routes/tourRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
+const bookingRouter = require("./routes/bookingRoutes");
 const viewRouter = require("./routes/viewRoutes");
 
 const app = express();
@@ -123,6 +124,7 @@ app.use("/", viewRouter);
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/bookings", bookingRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
@@ -135,8 +137,8 @@ mongoose
   .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
   })
-  .then(() => console.log("Database connected successfully🥰"))
-  .catch(err => console.log("Error connecting to database🙄", err));
+  .then(() => console.log("Database connected successfully🥰💚🥰"))
+  .catch(err => console.log("Error connecting to database🙄💥🙄", err.message));
 
 // 4) START SERVER
 const port = process.env.PORT || 8000;
