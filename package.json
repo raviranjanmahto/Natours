@@ -9,7 +9,7 @@
     "debug": "ndb server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:js": "parcel watch --no-hmr ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "repository": {
     "type": "git",
